@@ -229,7 +229,8 @@ install_docker_compose() {
 start_docker() {
     echo -e "🐳 Starting Docker ...\n"
     if [[ $os == "Mac" ]]; then
-        open --background -a Docker && while ! docker system info > /dev/null 2>&1; do sleep 1; done
+        #open --background -a Docker && while ! docker system info > /dev/null 2>&1; do sleep 1; done
+        while ! docker system info > /dev/null 2>&1; do sleep 1; done
     else
         if ! $sudo_cmd systemctl is-active docker.service > /dev/null; then
             echo "Starting docker service"
