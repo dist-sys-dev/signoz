@@ -229,13 +229,18 @@ install_docker_compose() {
 start_docker() {
     echo -e "🐳 Starting Docker ...\n"
     if [[ $os == "Mac" ]]; then
+        # On my macOS, run `colima start` to start docker instead of `Docker Desktop.app`.
+        # So, we comment following line out.
         #open --background -a Docker && while ! docker system info > /dev/null 2>&1; do sleep 1; done
         while ! docker system info > /dev/null 2>&1; do sleep 1; done
     else
-        if ! $sudo_cmd systemctl is-active docker.service > /dev/null; then
-            echo "Starting docker service"
-            $sudo_cmd systemctl start docker.service
-        fi
+        # On my windows WSL, run `Docker Desktop` in the host instead of docker.service on Linux Distro.
+        # So, we comment following lines out.
+        #if ! $sudo_cmd systemctl is-active docker.service > /dev/null; then
+            #echo "Starting docker service"
+            #$sudo_cmd systemctl start docker.service
+        #fi
+        while ! docker system info > /dev/null 2>&1; do sleep 1; done
         if [[ -z $sudo_cmd ]]; then
             if ! docker ps > /dev/null && true; then
                 request_sudo
